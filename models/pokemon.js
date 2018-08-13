@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Pokemon = sequelize.define("Pokemon", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true
     },
