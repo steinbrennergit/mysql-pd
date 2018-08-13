@@ -22,10 +22,6 @@
         "no-multi-spaces": "error",
         "no-unused-vars": "error",
         "camelcase": "error",
-        "indent": [
-            "error",
-            2
-        ],
         "quotes": [
             "error",
             "double"

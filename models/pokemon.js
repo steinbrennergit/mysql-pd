@@ -43,9 +43,20 @@ module.exports = function(sequelize, DataTypes) {
     speed: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    generation: {
+      type: DataTypes.INTEGER
+    },
+    legendary: {
+      type: DataTypes.BOOLEAN
     }
   }, {
-    tableName: "Pokemon"
+    tableName: "Pokemon",
+    timestamps: false
   });
+
+  // Possible model for movesets
+  // Association to moveset
+
   return Pokemon;
 };
