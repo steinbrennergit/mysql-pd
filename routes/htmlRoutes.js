@@ -1,5 +1,4 @@
 var db = require("../models");
-var crypto = require("crypto");
 
 module.exports = function (app) {
   /*
@@ -15,8 +14,7 @@ module.exports = function (app) {
   */
 
   app.post("/signup", function (req, res) {
-    req.body.salt = crypto.randomBytes(20).toString("hex");
-    db.User.create(req.body).then(function (result) {
+    db.User.signup(req.body).then(function (result) {
       res.json(result);
     });
   });
