@@ -1,7 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
   var Image = sequelize.define("Image", {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
@@ -9,6 +9,8 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     }
+  }, {
+    timestamps: false
   });
 
   Image.associate = function(models) {
