@@ -12,14 +12,18 @@ module.exports = function (app) {
   });
   */
 
-  /*
+  
   // Get a pokemon by name
-  app.get("/api/pokemon", function(req, res) {
-    db.Pokemon.create(req.body).then(function(data) {
+  app.get("/api/pokemon/:name", function(req, res) {
+    db.Pokemon.findOne({
+      where: {
+        name: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
+      }
+    }).then(function(data) {
       res.json(data);
     });
   });
-  */
+  
 
   
   // Get a Pokemon by id

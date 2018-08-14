@@ -119,7 +119,7 @@ id,indexedName,name,type1,type2,total,hp,atk,def,spAtk,spDef,speed,generation,le
 117,seadra,Seadra,Water,,440,55,65,95,95,45,85,1,0
 118,goldeen,Goldeen,Water,,320,45,67,60,35,50,63,1,0
 121,starmie,Starmie,Water,Psychic,520,60,75,85,100,85,115,1,0
-122,mr mime,Mr. Mime,Psychic,Fairy,460,40,45,65,100,120,90,1,0
+122,mrmime,Mr. Mime,Psychic,Fairy,460,40,45,65,100,120,90,1,0
 120,staryu,Staryu,Water,,340,30,45,55,70,55,85,1,0
 126,magmar,Magmar,Fire,,495,65,95,57,100,85,93,1,0
 125,electabuzz,Electabuzz,Electric,,490,65,83,57,95,85,105,1,0
