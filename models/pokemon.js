@@ -1,9 +1,13 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var Pokemon = sequelize.define("Pokemon", {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
+    },
+    indexedName: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
@@ -43,9 +47,30 @@ module.exports = function(sequelize, DataTypes) {
     speed: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    generation: {
+      type: DataTypes.INTEGER
+    },
+    legendary: {
+      type: DataTypes.BOOLEAN
     }
   }, {
-    tableName: "Pokemon"
-  });
+      tableName: "Pokemon",
+      timestamps: false,
+      indexes: [{
+        unique: true,
+        fields: ["id", "indexedName"]
+      }]
+    });
+
+  Pokemon.associate = function (models) {
+    Pokemon.hasOne(models.Image, {
+      foreignKey: "id"
+    });
+  };
+
+  // Possible model for movesets
+  // Association to moveset
+
   return Pokemon;
 };
