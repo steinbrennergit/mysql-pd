@@ -17,7 +17,7 @@ module.exports = function (app) {
   app.get("/api/pokemon/:name", function(req, res) {
     db.Pokemon.findOne({
       where: {
-        name: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
+        indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
       }
     }).then(function(data) {
       res.json(data);
