@@ -15,6 +15,16 @@ module.exports = function (app) {
   
   // Get a pokemon by name
   app.get("/api/pokemon/:name", function(req, res) {
+    if (req.params.name === "nidoran") {
+      var coinToss = Math.floor(Math.random() * 2);
+
+      if (coinToss === 0) {
+        req.params.name = "nidoranf";
+      } else {
+        req.params.name = "nidoranm";
+      }
+    }
+
     db.Pokemon.findOne({
       where: {
         indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
