@@ -12,12 +12,11 @@ module.exports = function (app) {
   });
   */
 
-  
   // Get a pokemon by name
   app.get("/api/pokemon/:name", function(req, res) {
     if (req.params.name === "nidoran") {
+      // Solving the Nidoran edge case
       var coinToss = Math.floor(Math.random() * 2);
-
       if (coinToss === 0) {
         req.params.name = "nidoranf";
       } else {
@@ -33,8 +32,6 @@ module.exports = function (app) {
       res.json(data);
     });
   });
-  
-
   
   // Get a Pokemon by id
   app.get("/api/pokemon/:id", function(req, res) {
