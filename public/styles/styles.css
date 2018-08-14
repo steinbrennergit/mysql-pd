@@ -1000,7 +1000,7 @@
 
 }
 
-@media handheld and (orientation:landscape), (max-width:639px) {
+@media handheld and (orientation:portrait), (max-width:639px) {
 
 	div#pokedex
 	{
