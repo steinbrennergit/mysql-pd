@@ -22,8 +22,6 @@
         "no-multi-spaces": "error",
         "no-unused-vars": "error",
         "camelcase": "error",
-   
-       
         "quotes": [
             "error",
             "double"
