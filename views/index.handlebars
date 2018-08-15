@@ -25,10 +25,10 @@
       <div id="picture">
 
         {{#each pokemon}} {{> pokemon/image}} {{/each}}
-        
+
       </div>
       <button onclick="getPokemon()" id="buttonbottomPicture"></button>
-      <input id="textbox" type="text" width=1 0%>
+      <input id="textbox" type="text">
       <div id="speakers">
         <div class="sp"></div>
         <div class="sp"></div>
@@ -81,8 +81,12 @@
     <div id="miniButtonGlass5"></div>
     <div id="barbutton3"></div>
     <div id="barbutton4"></div>
-    <div id="yellowBox1"></div>
-    <div id="yellowBox2"></div>
+    <div id="yellowBox1">
+      {{#each pokemon}} {{> pokemon/yellow1}} {{/each}}
+    </div>
+    <div id="yellowBox2">
+      {{#each pokemon}} {{> pokemon/yellow2}} {{/each}}
+    </div>
     <div id="bg_curve1_right"></div>
     <div id="bg_curve2_right"></div>
     <div id="curve1_right"></div>

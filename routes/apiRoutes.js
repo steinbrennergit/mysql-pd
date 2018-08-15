@@ -73,7 +73,8 @@ module.exports = function (app) {
     db.Pokemon.findOne({
       where: {
         indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
-      }
+      },
+      include: [db.Image]
     }).then(function (data) {
       res.json(data);
     });

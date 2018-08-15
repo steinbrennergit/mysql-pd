@@ -1,0 +1,6 @@
+{{#if this.Image.dataValues.url}}
+<img class="constrain" src="{{this.Image.dataValues.url}}">
+{{/if}}
+{{#unless this.Image.dataValues.url}}
+<p class="pokemon-font"><strong>NO POKEMON FOUND</strong></p>
+{{/unless}}

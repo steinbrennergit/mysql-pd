@@ -41,12 +41,16 @@ module.exports = function (app) {
     db.Pokemon.findOne({
       where: {
         indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
-      }
+      },
+      include: [db.Image]
     }).then(function (data) {
+      console.log(data);
+
       let obj = {
         pokemon: [data]
       }
       res.render("index", obj);
+
     });
   });
 };

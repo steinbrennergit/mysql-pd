@@ -277,7 +277,11 @@
 
         animation-name: greenPulse;
         animation-duration: 2s;
-    }
+	}
+	
+	#textbox {
+		width: 60%;
+	}
 
 	div#junction
 	{
@@ -289,6 +293,26 @@
 		background: -webkit-linear-gradient(left, #8b0000 0%, #c00d0d 50%, #8b0000 100%);
 		background: -moz-linear-gradient(left, #8b0000 0%, #c00d0d 50%, #8b0000 100%);
 		background: -o-linear-gradient(left, #8b0000 0%, #c00d0d 50%, #8b0000 100%);
+	}
+
+	.small-pokemon-font {
+		font-size: 13px;
+		-webkit-font-smoothing: none;
+		-moz-font-smoothing: none;
+		font-family: 'pokemon-font', monospace;
+	}
+
+	.inner-yellow {
+		margin-top: 3%;
+		margin-left: 2%;
+	}
+	
+	.pokemon-font {
+		margin-left: 5%;
+		font-size: 16px;
+		-webkit-font-smoothing: none;
+		-moz-font-smoothing: none;
+		font-family: 'pokemon-font', monospace;
 	}
 
 	div#junction1
@@ -341,6 +365,13 @@
 		position: absolute;
 		bottom: 0;
 		left: 0;
+	}
+
+	.constrain {
+		max-height: 95%;
+		max-width: 95%;
+		padding-top: 2.5%;
+		padding-left: 2.5%;
 	}
 
 	#picture
