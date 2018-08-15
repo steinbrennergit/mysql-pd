@@ -26,10 +26,27 @@ module.exports = function (app) {
   });
   */
 
-  /*
-  // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
-    res.render("404");
+  // Get a pokemon by name
+  app.get("/:name", function (req, res) {
+    if (req.params.name === "nidoran") {
+      // Solving the Nidoran edge case
+      var coinToss = Math.floor(Math.random() * 2);
+      if (coinToss === 0) {
+        req.params.name = "nidoranf";
+      } else {
+        req.params.name = "nidoranm";
+      }
+    }
+
+    db.Pokemon.findOne({
+      where: {
+        indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
+      }
+    }).then(function (data) {
+      let obj = {
+        pokemon: [data]
+      }
+      res.render("index", obj);
+    });
   });
-  */
 };
