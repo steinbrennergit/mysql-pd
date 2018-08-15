@@ -5,15 +5,24 @@ module.exports = function (app) {
 
   // Load index page
   app.get("/", function (req, res) {
+    if (!req.user) {
+      return res.redirect("/signin");
+    }
     res.render("index");
   });
 
+  app.get("/signin", function (req, res) {
+    if (req.user) {
+      return res.redirect("/");
+    }
+    res.render("signin");
+  });
 
-  // app.post("/signup", function (req, res) {
-  //   db.User.signup(req.body).then(function (result) {
-  //     res.json(result);
-  //   });
-  // });
+  app.post("/signup", function (req, res) {
+    db.User.signup(req.body).then(function (result) {
+      res.json(result);
+    });
+  });
 
   /*
   // Load example page and pass in an example by id
@@ -28,6 +37,10 @@ module.exports = function (app) {
 
   // Get a pokemon by name
   app.get("/:name", function (req, res) {
+    if (!req.user) {
+      return res.redirect("/signin");
+    }
+
     if (req.params.name === "nidoran") {
       // Solving the Nidoran edge case
       var coinToss = Math.floor(Math.random() * 2);
