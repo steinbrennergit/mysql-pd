@@ -3,6 +3,10 @@
 	padding: 0;
 }
 
+body{
+	font-family: 'pokemon-font', monospace;
+}
+
 /* The Modal (background) */
 .tiny {
 	max-height: 100%;
@@ -572,6 +576,8 @@
 		position: absolute;
 		top: 632px;
 		left: 156.25px;
+		box-shadow: 0 9px #999;
+		cursor: pointer;
 
 		border-radius: 100px;
 		-webkit-border-radius: 100px;
@@ -588,6 +594,14 @@
 		-moz-box-shadow: -1px 2px #004200;
 		-o-box-shadow: -1px 2px #004200;
 	}
+	#barbutton1.hover {background-color: #3e8e41}
+
+	#barbutton1:active {
+		background-color: #3e8e41;
+		box-shadow: 0 5px #666;
+		transform: translateY(4px);
+
+	}
 
 	div#barbutton2
 	{
@@ -597,6 +611,8 @@
 		position: absolute;
 		top: 632.5px;
 		left: 257.5px;
+		box-shadow: 0 9px #999;
+		cursor: pointer;
 
 		border-radius: 100px;
 		-webkit-border-radius: 100px;
@@ -612,6 +628,13 @@
 		-webkit-box-shadow: -1px 2px #7b0000;
 		-moz-box-shadow: -1px 2px #7b0000;
 		-o-box-shadow: -1px 2px #7b0000;
+	}
+
+	#barbutton2:active {
+		background-color: #3e8e41;
+		box-shadow: 0 5px #666;
+		transform: translateY(4px);
+
 	}
 
 	div#cross
@@ -1944,6 +1967,7 @@
 		position: absolute;
 		top: 360px;
 		left: 60px;
+		cursor: pointer;
 	}
 
 	div#blueButtons2
@@ -1953,6 +1977,7 @@
 		position: absolute;
 		top: 415px;
 		left: 60px;
+		cursor: pointer;
 	}
 
 	.blueButton
@@ -1962,6 +1987,7 @@
 		background-color: #003300;
 		float: left;
 		margin-right: 10px;
+		cursor: pointer;
 
 		border-radius: 10px;
 		-webkit-border-radius: 10px;
@@ -2989,6 +3015,7 @@
 		background-color: #003300;
 		float: left;
 		margin-right: 7px;
+		cursor: pointer;
 
 		border-radius: 10px;
 		-webkit-border-radius: 10px;
