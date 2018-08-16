@@ -1,10 +1,41 @@
 var db = require("../models");
 // var passport = require("../config/passport");
 
-var userTeam = function (id) {
+var findUserTeam = function (id) {
   return db.Team.findOne({
     user_id: id
   })
+}
+
+var findTeamPokemon = function (data) {
+  var listOfIds = [];
+  for (key in data.dataValues) {
+    if (key[0] === "p") {
+      console.log(data.dataValues[key]);
+      listOfIds.push(data.dataValues[key])
+    }
+  }
+  return db.Pokemon.findAll({
+    where: {
+      id: listOfIds
+    },
+    include: [db.Image]
+  })
+}
+
+var assembleTeamObject = function (data) {
+  var obj = {};
+
+  for (let i = 0; i < 10; i++) {
+    let key = "p" + i;
+    if (data[i]) {
+      obj[key] = data[i].dataValues;
+    } else {
+      obj[key] = null;
+    }
+  }
+
+  return obj;
 }
 
 module.exports = function (app) {
@@ -14,13 +45,11 @@ module.exports = function (app) {
     if (!req.user) {
       return res.redirect("/signin");
     }
-
     // Need to get user's team to pass to render
-    userTeam(req.user.id).then((data) => {
-      console.log(data);
+    findUserTeam(req.user.id).then(findTeamPokemon).then((data) => {
+      var hbsObj = assembleTeamObject(data);
+      res.render("index", hbsObj);
     });
-
-    res.render("index");
   });
 
   app.get("/signin", function (req, res) {
@@ -57,19 +86,21 @@ module.exports = function (app) {
       }
     }
 
-    db.Pokemon.findOne({
-      where: {
-        indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
-      },
-      include: [db.Image]
-    }).then(function (data) {
-      console.log(data);
+    findUserTeam(req.user.id).then(findTeamPokemon).then((data) => {
+      var hbsObj = assembleTeamObject(data);
+      // res.render("index", hbsObj);
+      db.Pokemon.findOne({
+        where: {
+          indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
+        },
+        include: [db.Image]
+      }).then(function (data) {
+        console.log(data);
 
-      let obj = {
-        pokemon: [data]
-      }
-      res.render("index", obj);
+        hbsObj.pokemon = [data];
+        res.render("index", hbsObj);
 
+      });
     });
   });
 };

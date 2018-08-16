@@ -8,6 +8,10 @@ module.exports = function (sequelize, DataTypes) {
     url: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    spriteUrl: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     timestamps: false
