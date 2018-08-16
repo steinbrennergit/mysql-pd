@@ -18,32 +18,39 @@
   <div id="signInModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
-      <div class="modal-header">
+      <div style="background-color:#c00d0d" class="modal-header">
         <span id="signInSpan" class="close">&times;</span>
-        <h2>Sign In</h2>
+        <h2 style="color:black">SIGN IN</h2>
       </div>
       <div class="modal-body">
         <div class="container">
+          <P>If you've never logged in before please provide your name.</P>
+          <P>If you already have an account, log in with email and password.</P>
+          <br>
           <form id="signIn">
             <label for="name">
-              <b>Name:</b>
+              <b>NAME:</b>
             </label>
-            <input id="name" type="text" placeholder="Enter your name" name="username">
-
+            <input id="name" type="text" placeholder="" name="username">
+            <br>
+            <br>
             <label for="email">
-              <b>Email:</b>
+              <b>EMAIL:</b>
             </label>
-            <input id="email" type="email" placeholder="Enter Email" name="email" required>
-
+            <input id="email" type="email" placeholder="" name="email" required>
+            <br>
+            <br>
             <label for="password">
-              <b>Password:</b>
+              <b>PASSWORD:</b>
             </label>
-            <input id="password" type="password" placeholder="Enter Password" name="password" required>
-            <button type="submit">Login</button>
+            <input id="password" type="password" placeholder="" name="password" required>
+            <br>
+            <br>
+            <button id="submit" type="submit">LOGIN</button>
           </form>
         </div>
       </div>
-      <div class="modal-footer">
+      <div style="background-color:#c00d0d"class="modal-footer">
       </div>
     </div>
   </div>
