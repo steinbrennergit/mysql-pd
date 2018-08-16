@@ -93,6 +93,12 @@ function signUpUser(name, email, password) {
     });
 }
 
+$("#quit").on("click", function () {
+    $.get("/logout").then((res) => {
+        location.reload();
+    })
+});
+
 // When the user clicks the button, open the modal 
 startBtn.onclick = function () {
     // console.log("Clicked the blue button"); 

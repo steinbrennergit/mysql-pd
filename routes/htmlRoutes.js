@@ -3,11 +3,16 @@ var db = require("../models");
 
 var findUserTeam = function (id) {
   return db.Team.findOne({
-    user_id: id
-  })
+    where: {
+      user_id: id
+    }
+  });
 }
 
 var findTeamPokemon = function (data) {
+  if (!data) {
+    return null;
+  }
   var listOfIds = [];
   for (key in data.dataValues) {
     if (key[0] === "p") {
@@ -29,6 +34,7 @@ var assembleTeamObject = function (data) {
   for (let i = 0; i < 10; i++) {
     let key = "p" + i;
     if (data[i]) {
+      // console.log("not here");
       obj[key] = data[i].dataValues;
     } else {
       obj[key] = null;
@@ -47,8 +53,13 @@ module.exports = function (app) {
     }
     // Need to get user's team to pass to render
     findUserTeam(req.user.id).then(findTeamPokemon).then((data) => {
-      var hbsObj = assembleTeamObject(data);
-      res.render("index", hbsObj);
+      if (data) {
+        var hbsObj = assembleTeamObject(data);
+        res.render("index", hbsObj);
+      } else {
+        res.render("index");
+      }
+
     });
   });
 
