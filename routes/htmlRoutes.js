@@ -1,5 +1,11 @@
 var db = require("../models");
-var passport = require("../config/passport");
+// var passport = require("../config/passport");
+
+var userTeam = function (id) {
+  return db.Team.findOne({
+    user_id: id
+  })
+}
 
 module.exports = function (app) {
 
@@ -8,6 +14,12 @@ module.exports = function (app) {
     if (!req.user) {
       return res.redirect("/signin");
     }
+
+    // Need to get user's team to pass to render
+    userTeam(req.user.id).then((data) => {
+      console.log(data);
+    });
+
     res.render("index");
   });
 
@@ -16,12 +28,6 @@ module.exports = function (app) {
       return res.redirect("/");
     }
     res.render("signin");
-  });
-
-  app.post("/signup", function (req, res) {
-    db.User.signup(req.body).then(function (result) {
-      res.json(result);
-    });
   });
 
   /*

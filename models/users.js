@@ -6,7 +6,6 @@ module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("User", {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             autoIncrement: true,
             primaryKey: true
         },
@@ -44,6 +43,10 @@ module.exports = function (sequelize, DataTypes) {
     User.hook("beforeCreate", function (user) {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
     });
+
+    User.associate = function (models) {
+        User.hasOne(models.Team, { foreignKey: "user_id" });
+    }
 
     return User;
 };
