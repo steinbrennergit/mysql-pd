@@ -55,8 +55,11 @@ module.exports = function (app) {
   // Route for signing up a user
   app.post("/api/signup", function (req, res) {
     // console.log(req.body);
-    db.User.create(req.body).then(function () {
-      res.redirect(307, "/api/login");
+    db.User.create(req.body).then(function (data) {
+      // console.log(data);
+      createUserTeam(data.dataValues.id, {}).then(() => {
+        res.redirect(307, "/api/login");
+      });      
     }).catch(function (err) {
       // console.log(err);
       res.json(err);
