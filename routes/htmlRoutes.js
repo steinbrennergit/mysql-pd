@@ -2,6 +2,7 @@ var db = require("../models");
 // var passport = require("../config/passport");
 
 var findUserTeam = function (id) {
+  // console.log("attempted findUserTeam");
   return db.Team.findOne({
     where: {
       user_id: id
@@ -9,39 +10,13 @@ var findUserTeam = function (id) {
   });
 }
 
-var findTeamPokemon = function (data) {
-  if (!data) {
-    return null;
-  }
-  var listOfIds = [];
-  for (key in data.dataValues) {
-    if (key[0] === "p") {
-      console.log(data.dataValues[key]);
-      listOfIds.push(data.dataValues[key])
-    }
-  }
+var findTeamPokemon = function (listOfIds) {
   return db.Pokemon.findAll({
     where: {
       id: listOfIds
     },
     include: [db.Image]
-  })
-}
-
-var assembleTeamObject = function (data) {
-  var obj = {};
-
-  for (let i = 0; i < 10; i++) {
-    let key = "p" + i;
-    if (data[i]) {
-      // console.log("not here");
-      obj[key] = data[i].dataValues;
-    } else {
-      obj[key] = null;
-    }
-  }
-
-  return obj;
+  });
 }
 
 module.exports = function (app) {
@@ -52,14 +27,44 @@ module.exports = function (app) {
       return res.redirect("/signin");
     }
     // Need to get user's team to pass to render
-    findUserTeam(req.user.id).then(findTeamPokemon).then((data) => {
-      if (data) {
-        var hbsObj = assembleTeamObject(data);
-        res.render("index", hbsObj);
-      } else {
-        res.render("index");
+    findUserTeam(req.user.id).then((data) => {
+      if (!data) {
+        return null;
+      }
+      // console.log(data.dataValues);
+      // console.log("findUserTeam found data");
+      var obj = {};
+      var listOfIds = [];
+      for (key in data.dataValues) {
+        if (key[0] === "p" && data.dataValues[key]) {
+          // console.log(data.dataValues[key]);
+          obj[key] = data.dataValues[key];
+          listOfIds.push(data.dataValues[key]);
+        } else if (key[0] === "p") {
+          obj[key] = null;
+        }
       }
 
+      findTeamPokemon(listOfIds).then((data) => {
+        for (let i = 0; i < 10; i++) {
+          let key = "p" + i;
+          data.forEach((set) => {
+            if (obj[key] === set.dataValues.id) {
+              obj[key] = set.dataValues;
+            }
+          });
+        }
+
+        // console.log(data);
+        res.render("index", obj);
+        // console.log(obj);
+      }).catch((err) => {
+        console.log(err);
+        res.render("index");
+      });
+    }).catch((err) => {
+      console.log(err);
+      res.render("index");
     });
   });
 
@@ -97,21 +102,60 @@ module.exports = function (app) {
       }
     }
 
-    findUserTeam(req.user.id).then(findTeamPokemon).then((data) => {
-      var hbsObj = assembleTeamObject(data);
-      // res.render("index", hbsObj);
-      db.Pokemon.findOne({
-        where: {
-          indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
-        },
-        include: [db.Image]
-      }).then(function (data) {
-        console.log(data);
+    findUserTeam(req.user.id).then((data) => {
+      if (!data) {
+        return null;
+      }
+      // console.log(data.dataValues);
+      // console.log("findUserTeam found data");
+      var obj = {};
+      var listOfIds = [];
+      for (key in data.dataValues) {
+        if (key[0] === "p" && data.dataValues[key]) {
+          // console.log(data.dataValues[key]);
+          obj[key] = data.dataValues[key];
+          listOfIds.push(data.dataValues[key]);
+        } else if (key[0] === "p") {
+          obj[key] = null;
+        }
+      }
 
-        hbsObj.pokemon = [data];
-        res.render("index", hbsObj);
+      findTeamPokemon(listOfIds).then((data) => {
+        for (let i = 0; i < 10; i++) {
+          let key = "p" + i;
+          data.forEach((set) => {
+            if (obj[key] === set.dataValues.id) {
+              obj[key] = set.dataValues;
+            }
+          });
+        }
 
+        db.Pokemon.findOne({
+          where: {
+            indexedName: req.params.name // .toLowerCase().replace(/[^a-z]/, "");
+          },
+          include: [db.Image]
+        }).then(function (data) {
+          // console.log(data);
+
+          obj.pokemon = [data];
+          res.render("index", obj);
+
+        });
+      }).catch((err) => {
+        console.log(err);
+
+        var hbsObj = {};
+        db.Pokemon.findOne({
+          where: {
+            indexedName: req.params.name
+          },
+          include: [db.Image]
+        }).then((data) => {
+          hbsObj.pokemon = [data];
+          res.render("index", hbsObj)
+        });
       });
     });
   });
-};
+}
