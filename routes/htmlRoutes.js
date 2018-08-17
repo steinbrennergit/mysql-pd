@@ -75,17 +75,6 @@ module.exports = function (app) {
     res.render("signin");
   });
 
-  /*
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
-  });
-  */
-
   // Get a pokemon by name
   app.get("/:name", function (req, res) {
     if (!req.user) {

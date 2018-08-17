@@ -32,10 +32,6 @@ var addToUserTeam = function (id, obj) {
   });
 }
 
-// var overwriteOnUserTeam = function (id, obj) {
-//   return;
-// }
-
 module.exports = function (app) {
   
   // Get all Pokemon

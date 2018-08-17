@@ -51,17 +51,40 @@ var API = {
             data: JSON.stringify(obj)
         });
     },
-    // removePokemon: function (obj) {
-    //     return $.ajax({
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         type: "DELETE",
-    //         url: "api/blueButton/",
-    //         data: JSON.stringify(obj)
-    //     })
-    // }
 };
+
+// Parses down the search string and asks the API for a pokemon
+function getPokemon() {
+    let search = document.getElementById("textbox").value.toLowerCase().replace(/[^a-z]/, "").replace(" ", "");
+
+    API.searchForPokemon(search);
+}
+
+// loginUser does a post to our "api/login" route and if successful, redirects us the the members page
+function loginUser(email, password) {
+    $.post("/api/login", {
+        email: email,
+        password: password
+    }).then(function (data) {
+        window.location.replace(data);
+        // If there's an error, log the error
+    }).catch(function (err) {
+        console.log(err);
+    });
+}
+
+// signUpUser will add user to the database and log them in
+function signUpUser(name, email, password) {
+    $.post("/api/signup", {
+        username: name,
+        email,
+        password
+    }).then(function (data) {
+        window.location.replace(data);
+    });
+}
+
+// LISTENERS BELOW - mix of JQuery and vanilla JS
 
 document.addEventListener("DOMContentLoaded", function () {
     voices = synth.getVoices();
@@ -78,12 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
     utterThis.rate = rateValue;
     synth.speak(utterThis);
 });
-
-function getPokemon() {
-    let search = document.getElementById("textbox").value.toLowerCase().replace(/[^a-z]/, "").replace(" ", "");
-
-    API.searchForPokemon(search);
-}
 
 signInForm.on("submit", function (event) {
     event.preventDefault();
@@ -107,29 +124,6 @@ signInForm.on("submit", function (event) {
     $("#password").val("");
     $("#name").val("");
 });
-
-// loginUser does a post to our "api/login" route and if successful, redirects us the the members page
-function loginUser(email, password) {
-    $.post("/api/login", {
-        email: email,
-        password: password
-    }).then(function (data) {
-        window.location.replace(data);
-        // If there's an error, log the error
-    }).catch(function (err) {
-        console.log(err);
-    });
-}
-
-function signUpUser(name, email, password) {
-    $.post("/api/signup", {
-        username: name,
-        email,
-        password
-    }).then(function (data) {
-        window.location.replace(data);
-    });
-}
 
 $("#quit").on("click", function () {
     $.get("/logout").then((res) => {
@@ -200,4 +194,3 @@ window.onclick = function (event) {
         signInModal.style.display = "none";
     }
 }
-// Connect buttons to listeners
