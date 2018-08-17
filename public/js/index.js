@@ -10,19 +10,57 @@ var synth = window.speechSynthesis;
 var pitchValue = 1.2;
 var rateValue = 1;
 var voices = [];
+const home = window.location.origin + "/";
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-    home: window.location.origin,
     searchForPokemon: function (str) {
-        window.location.href = this.home + "/" + str;
+        window.location.href = home + str;
     },
     isLoggedIn: function () {
         return $.ajax({
             url: "/api/user_data",
             type: "GET"
         });
-    }
+    },
+    getPokemonId: function (obj) {
+        // console.log("api get pokemon id");
+        return $.ajax({
+            url: "/api/pokemon/" + obj.name,
+            type: "GET"
+        });
+    },
+    savePokemon: function (obj) {
+        // console.log("api save pokemon");
+        return $.ajax({
+            headers: {
+                "Content-Type": "application/json"
+            },
+            type: "POST",
+            url: "api/blueButton/",
+            data: JSON.stringify(obj)
+        });        
+    },
+    overwritePokemon: function (obj) {
+        return $.ajax({
+            headers: {
+                "Content-Type": "application/json"
+            },
+            type: "PUT",
+            url: "api/blueButton/",
+            data: JSON.stringify(obj)
+        });
+    },
+    // removePokemon: function (obj) {
+    //     return $.ajax({
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         type: "DELETE",
+    //         url: "api/blueButton/",
+    //         data: JSON.stringify(obj)
+    //     })
+    // }
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -42,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function getPokemon() {
-    let search = document.getElementById("textbox").value.toLowerCase().replace(/[^a-z]/, "");
+    let search = document.getElementById("textbox").value.toLowerCase().replace(/[^a-z]/, "").replace(" ", "");
 
     API.searchForPokemon(search);
 }
@@ -60,7 +98,7 @@ signInForm.on("submit", function (event) {
     }
 
     if (userData.name) {
-        console.log("signing up");
+        // console.log("signing up");
         signUpUser(userData.name, userData.email, userData.password);
     } else {
         loginUser(userData.email, userData.password);
@@ -88,7 +126,7 @@ function signUpUser(name, email, password) {
         username: name,
         email,
         password
-    }).then(function(data) {
+    }).then(function (data) {
         window.location.replace(data);
     });
 }
@@ -97,6 +135,48 @@ $("#quit").on("click", function () {
     $.get("/logout").then((res) => {
         location.reload();
     })
+});
+
+$(".blueButton").on("click", function () {
+    API.isLoggedIn().then((res) => {
+        if (!res) {
+            return;
+        } else {
+            let val = $(this).val();
+            let href = $(this).attr("href");
+            // console.log(!href);
+            // console.log("VAL: " + val + ", HREF: " + href);
+            // console.log(window.location.href);
+            // console.log(home);
+            // console.log(home === window.location.href);
+
+
+            if (href === "/" || !href) { // Save pokemon to the empty button
+                let obj = {
+                    key: val,
+                    name: $("#pokemon-name").text().toLowerCase().replace(/[^a-z]/, "").replace(" ", "")
+                }
+                API.getPokemonId(obj).then((data) => {
+                    obj.id = data.id;
+                    API.savePokemon(obj).then((data) => {
+                        window.location.href = home + obj.name;
+                    });
+                });
+            } else { // Go to pokemon at button or overwrite pokemon at button
+                if (home + href !== window.location.href) {
+                    API.searchForPokemon(href); // Go to pokemon COMPLETE
+                } else {
+                    let obj = {
+                        [val]: null
+                    }
+
+                    API.overwritePokemon(obj).then((data) => {
+                        window.location.href = home + href;
+                    })
+                }
+            }
+        }
+    });
 });
 
 // When the user clicks the button, open the modal 
