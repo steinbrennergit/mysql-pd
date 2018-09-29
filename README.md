@@ -1,24 +1,16 @@
-#####
-# project-two MVP
-#####
-# Planned complete: EOD 08/14/18
+#MySQL-Pokedex
 
 * User can search for any Pokemon. 
     * Image pops up, display some stats, etc.
+    * Device will say the name of the Pokemon found, if one is found
 
 * User can create an account & authenticate.
 
-* An authenticated user can save up to 6 "favorite" Pokemon.
+* An authenticated user can save up to 10 "favorite" Pokemon.
 
-#####
-# Battle Game
-#####
-# Hopeful complete: EOD 08/16/17
+* This is deployed at: https://mysql-pd.herokuapp.com/
 
-* Need data for abilities
-
-* Authenticated user picks 6 "favorite" Pokemon.
-
-* User enters a "queue" to face the next authenticated user with 6 "favorite" Pokemon.
-
-* Track Pokemon EXP, player inventory.
+* Sign in with the following:
+   * Leave the 'Name' field blank
+   * Username: test@test.com
+   * Password: testing
