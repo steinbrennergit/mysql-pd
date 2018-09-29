@@ -1,4 +1,4 @@
-#MySQL-Pokedex
+# MySQL-Pokedex
 
 * User can search for any Pokemon. 
     * Image pops up, display some stats, etc.
