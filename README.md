@@ -12,5 +12,5 @@
 
 * Sign in with the following:
    * Leave the 'Name' field blank
-   * Username: "test@test.com"
+   * Username: test@test.com
    * Password: testing
